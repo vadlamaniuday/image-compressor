@@ -99,3 +99,19 @@ async def upload_csv(file: UploadFile = File(...), db: Session = Depends(get_db)
         raise HTTPException(status_code=400, detail=str(ve))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+    
+
+
+@app.get("/status/{request_id}")
+def get_status(request_id: str, db: Session = Depends(get_db)):
+    processing_request = (
+        db.query(ProcessingRequest).filter_by(request_id=request_id).first()
+    )
+    if not processing_request:
+        raise HTTPException(status_code=404, detail="Request ID not found.")
+
+    return {
+        "request_id": processing_request.request_id,
+        "status": processing_request.status,
+    }
+
