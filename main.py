@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 from models import Base, ProcessingRequest, ProductImage
+from tasks import process_images_task
 import uuid
 import csv
 import io
@@ -92,6 +93,8 @@ async def upload_csv(file: UploadFile = File(...), db: Session = Depends(get_db)
         db.add(processing_request)
         db.commit()
         print("After Commit")
+
+        process_images_task.delay(request_id)
 
         return JSONResponse(content={"request_id": request_id})
 
