@@ -5,7 +5,7 @@ The service accepts CSV files containing product information and image URLs, pro
 
 ## Development Environment
 
-This project is developed and tested on Windows Subsystem for Linux (WSL2) with Ubuntu. For
+This project is developed and tested on Windows Subsystem for Linux (WSL2) with Ubuntu.
 
 ## Prerequisites
 
